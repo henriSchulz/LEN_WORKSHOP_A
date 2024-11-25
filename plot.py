@@ -60,4 +60,7 @@ for src in sources:
 
     plt.title("U-I-Kennlinie")
     plt.grid()
+
+    if not os.path.isdir("plots"):
+        os.mkdir("plots")
     plt.savefig(f"plots/{src}.png")
