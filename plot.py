@@ -47,8 +47,34 @@ for src in sources:
         powers.append(power)
     plt.plot(voltages, currents, marker="o")
 
+    max_power = max(powers)
+    max_power_index = powers.index(max_power)
+    max_power_voltage = voltages[max_power_index]
+    max_power_current = currents[max_power_index]
+
     plt.xlabel("Spannung [V]")
     plt.ylabel("Strom [A]")
+
+    plt.axvline(x=max_power_voltage, color="green", linestyle="--")
+    plt.axhline(y=max_power_current, color="green", linestyle="--")
+
+
+    fig = plt.gcf()
+
+    fig.set_size_inches(8, 6)
+
+    plt.plot(max_power_voltage, max_power_current, marker="o", color="green")
+
+    plt.legend(["U-I-Kennlinie", "max. Leistung"], loc="upper left")
+
+
+    #make plot larger for better readability
+
+
+
+
+
+
 
     # add second y-axis for power
 
@@ -59,7 +85,7 @@ for src in sources:
     ax2.set_ylabel("Leistung [W]")
 
     plt.title("U-I-Kennlinie")
-    plt.grid()
+    plt.grid(True)
 
     if not os.path.isdir("plots"):
         os.mkdir("plots")
