@@ -17,9 +17,10 @@ def process_measurements(src, resistance):
         # multiply every volatage by two
 
         voltage = data.iloc[:, 2].mean() * 2
-        current = I = (voltage * (2 * R_T + resistance)) / (resistance * R_T)
+        current = (voltage * (2 * R_T + resistance)) / (resistance * R_T)
+        power = voltage*current
 
-        return current, voltage
+        return current, voltage, power
     except Exception as e:
         print(f"Failed to open file {file_path}. Error: {e}")
 
@@ -30,10 +31,12 @@ sources = ["informatikom", "schreibtischlampe75"]
 for src in sources:
     currents = []
     voltages = []
+    powers = []
     for resistance in R_VALUES:
-        current, voltage = process_measurements(src, resistance)
+        current, voltage, power = process_measurements(src, resistance)
         currents.append(current)
         voltages.append(voltage)
+        powers.append(power)
     plt.plot(voltages, currents, marker="o")
     plt.xlabel("Spannung [V]")
     plt.ylabel("Strom [A]")
