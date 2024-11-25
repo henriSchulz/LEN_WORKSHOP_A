@@ -14,7 +14,9 @@ def process_measurements(src, resistance):
     R_T = 10 ** 5
     try:
         data = pd.read_csv(file_path, sep=";")
-        voltage = data.iloc[:, 2].mean()
+        # multiply every volatage by two
+
+        voltage = data.iloc[:, 2].mean() * 2
         current = I = (voltage * (2 * R_T + resistance)) / (resistance * R_T)
 
         return current, voltage
@@ -22,22 +24,21 @@ def process_measurements(src, resistance):
         print(f"Failed to open file {file_path}. Error: {e}")
 
 
-# Daten verarbeiten
 
-currents = []
-voltages = []
+sources = ["informatikom"]
 
-for resistance in R_VALUES:
-    src = "informatikom"
-    current, voltage = process_measurements(src, resistance)
-    currents.append(current)
-    voltages.append(voltage)
+for src in sources:
+    currents = []
+    voltages = []
+    for resistance in R_VALUES:
+        current, voltage = process_measurements(src, resistance)
+        currents.append(current)
+        voltages.append(voltage)
+    plt.plot(voltages, currents, marker="o")
+    plt.xlabel("Spannung [V]")
+    plt.ylabel("Strom [A]")
+    plt.title("U-I-Kennlinie")
+    plt.grid()
+    plt.savefig(f"plots/{src}.png")
 
-# Daten plotten U-I-Kennlinie mit verbundenen Punkten
 
-plt.plot(currents, voltages, marker="o")
-plt.xlabel("Spannung [V]")
-plt.ylabel("Strom [A]")
-plt.title("U-I-Kennlinie")
-plt.grid()
-plt.show()
