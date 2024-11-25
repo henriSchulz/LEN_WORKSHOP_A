@@ -25,7 +25,7 @@ def process_measurements(src, resistance):
 
 
 
-sources = ["informatikom"]
+sources = ["informatikom", "schreibtischlampe75"]
 
 for src in sources:
     currents = []
