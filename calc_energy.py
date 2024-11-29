@@ -11,16 +11,18 @@ def calc_power(t, voltages):
     return (U ** 2) / R_GES
 
 
-def calc_total_energie():
-    file_path = "data/outside_1000.csv"
-    data = pd.read_csv(file_path, sep=";")
-    voltages = data.iloc[:, 2]
-    times = data.iloc[:, 0]
-    powers = [calc_power(i, voltages) for i in range(0, len(times))]
-    total_energie = np.trapezoid(powers, times)
+def calc_total_energie(voltages):
+    time_array = range(len(voltages))
+    powers = [calc_power(i, voltages) for i in range(0, len(voltages))]
+    total_energie = np.trapezoid(powers, time_array)
     return total_energie
 
 
 if __name__ == "__main__":
-    total_energie = calc_total_energie()
+    file_path = "data/outside_1000.csv"
+    data = pd.read_csv(file_path, sep=";")
+    voltages = data.iloc[:, 2][0:7200]
+    times = range(0, len(voltages))
+
+    total_energie = calc_total_energie(voltages)
     print(f"Total energy: {total_energie} J")

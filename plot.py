@@ -56,6 +56,7 @@ def plot_sources(sources):
 
         save_latex_table(src, R_VALUES, voltages, currents, powers)
 
+
         plt.plot(voltages, currents, marker="o")
 
         max_power = max(powers)
@@ -91,7 +92,8 @@ def plot_sources(sources):
         if not os.path.isdir("plots"):
             os.mkdir("plots")
         plt.savefig(f"plots/{src}.png")
+        plt.clf()
 
 
 if __name__ == "__main__":
-    plot_sources(["schreibtischlampe75"])
+    plot_sources(["schreibtischlampe75", "lampe1", "lampe2"])
