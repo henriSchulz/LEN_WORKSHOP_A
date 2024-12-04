@@ -1,5 +1,8 @@
 import pandas as pd
 import numpy as np
+import os
+
+cwd = os.getcwd()
 
 def calc_energy(voltages):
     currents = np.diff(voltages * 2) * C
@@ -7,7 +10,7 @@ def calc_energy(voltages):
 
     return np.trapezoid(powers)
 
-file_path = "data/schreibtischlampe5_500_mk.csv"
+file_path = cwd + "/data/schreibtischlampe5_500_mk.csv"
 C = 0.22  # F
 data = pd.read_csv(file_path, sep=";")
 voltages = data.iloc[:, 2]

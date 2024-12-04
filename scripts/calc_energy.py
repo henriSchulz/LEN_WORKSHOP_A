@@ -1,5 +1,8 @@
 import numpy as np
 import pandas as pd
+import os
+
+cwd = os.getcwd()
 
 
 def calc_power(t, voltages):
@@ -19,7 +22,7 @@ def calc_total_energie(voltages):
 
 
 if __name__ == "__main__":
-    file_path = "data/outside_1000.csv"
+    file_path = cwd + "/data/outside_1000.csv"
     data = pd.read_csv(file_path, sep=";")
     voltages = data.iloc[:, 2][0:7200]
     times = range(0, len(voltages))

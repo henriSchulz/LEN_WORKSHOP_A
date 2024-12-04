@@ -1,9 +1,11 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
 
+cwd = os.getcwd()
 
-file_path_without_capacitor = "data/schreibtischlampe5_1000.csv"
-file_path_with_capacitor = "data/schreibtischlampe5_1000_mk.csv"
+file_path_without_capacitor = cwd +  "/data/schreibtischlampe5_1000.csv"
+file_path_with_capacitor = cwd + "/data/schreibtischlampe5_1000_mk.csv"
 
 
 def get_plot_data(file_path):
@@ -32,30 +34,34 @@ def plot_with_and_without_capacitor():
     # label x and y axis
     axs[0].set(xlabel="Zeit in Sekunden", ylabel="Spannung in Volt")
     axs[1].set(xlabel="Zeit in Sekunden", ylabel="Spannung in Volt")
-    plt.savefig("plots/capacitor-2.png")
+    plt.savefig("./plots/capacitor-2.png")
 
 def plot_outside_measurement():
     plt.clf()
-    file_path_outside = "data/outside_1000.csv"
+    file_path_outside = cwd + "/data/outside_1000.csv"
     x_axis, y_axis = get_plot_data(file_path_outside)
     plt.plot(x_axis, y_axis)
 
 
     plt.xlabel("Zeit in Sekunden")
     plt.ylabel("Spannung in Volt")
-    plt.savefig("plots/outside_measurement.png")
+    plt.savefig("./plots/outside_measurement.png")
 
 
 
 
 def plot_capacitor():
     plt.clf()
-    file_path_capacitor = "data/schreibtischlampe5_500_mk.csv"
+    file_path_capacitor = cwd + "/data/schreibtischlampe5_500_mk.csv"
     x_axis, y_axis = get_plot_data(file_path_capacitor)
     plt.plot(x_axis, y_axis)
     plt.xlabel("Zeit in Sekunden")
     plt.ylabel("Spannung in Volt")
-    plt.savefig("plots/capacitor.png")
+
+
+    plt.savefig("./plots/capacitor.png")
+
+
 
 
 
@@ -63,3 +69,4 @@ def plot_capacitor():
 plot_capacitor()
 plot_outside_measurement()
 plot_with_and_without_capacitor()
+print(f"Saved plots to plots/capacitor.png, plots/outside_measurement.png and plots/capacitor-2.png")

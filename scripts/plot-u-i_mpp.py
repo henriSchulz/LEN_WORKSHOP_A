@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 
 R_VALUES = [10, 100, 440, 680, 900, 1000, 1220, 1440, 1680, 2000, 3300, 4980]
 
+cwd = os.getcwd()
+
 data_path = "data"
 
 
@@ -15,9 +17,10 @@ def read_csv(file_path):
 
     return data
 
+
 # reads the data from the csv file and calculates the current and voltage values
 def process_measurements(src, resistance):
-    file_path = os.path.join(data_path, f"{src}_{resistance}.csv")
+    file_path = os.path.join(cwd, data_path, f"{src}_{resistance}.csv")
     R_T = 10 ** 5
     data = read_csv(file_path)
     voltage = data.iloc[:, 2].mean() * 2
@@ -32,10 +35,10 @@ def process_measurements(src, resistance):
 
 
 def save_latex_table(src, resistances, voltages, currents, powers):
-    if not os.path.isdir("latex"):
-        os.mkdir("latex")
+    if not os.path.isdir(os.path.join(cwd, "latex")):
+        os.mkdir(os.path.join(cwd, "latex"))
 
-    with open(f"latex/{src}.tex", "w") as f:
+    with open(os.path.join(cwd, f"latex/{src}.tex"), "w") as f:
         latex_string = pd.DataFrame(
             {"R": resistances, "V": voltages, "I": currents, "P": powers}
         ).to_latex(index=False)
@@ -55,7 +58,6 @@ def plot_sources(sources):
             powers.append(power)
 
         save_latex_table(src, R_VALUES, voltages, currents, powers)
-
 
         plt.plot(voltages, currents, marker="o")
 
@@ -87,11 +89,10 @@ def plot_sources(sources):
         plt.title("U-I-Kennlinie")
         plt.grid(True)
 
-
-
-        if not os.path.isdir("plots"):
-            os.mkdir("plots")
-        plt.savefig(f"plots/{src}.png")
+        if not os.path.isdir("../plots"):
+            os.mkdir("../plots")
+        plt.savefig(os.path.join(cwd, f"plots/{src}.png"))
+        print(f"Saved plot to plots/{src}.png")
         plt.clf()
 
 
